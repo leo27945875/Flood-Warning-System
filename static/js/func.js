@@ -21,6 +21,7 @@ xhr.onload = () => {
     let icon = L.icon({
         iconUrl: "https://image.flaticon.com/icons/svg/1627/1627389.svg",
         iconSize: [40, 40],
+        iconAnchor: [20, 40],
         popupAnchor: [0, -30]
     })
     let start = L.marker(coordinate["Start"], {
