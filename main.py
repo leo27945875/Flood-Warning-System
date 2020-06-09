@@ -23,7 +23,7 @@ def ReceiveFloodHeight():
 
     global receiver
 
-    receiver.ReceiveData(file=args.root+"flood_height.csv",
+    receiver.ReceiveData(file=args.heightData,
                          updateTime=args.updateTime)
 
 
@@ -31,11 +31,10 @@ def MakeFloodRangeImage():
 
     global model
 
-    oldHeight = -1.
+    oldHeight = -1e100
     while True:
         height = receiver.height
-        if height and (height != oldHeight):
-            height = 0. if height < 0. else height
+        if height and abs(height-oldHeight) >= 0.5 and height > 0.:
             oldHeight = height
             print("------------Making Flood Range Image-----------")
             model.Tune(height, export=True)
