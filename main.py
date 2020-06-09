@@ -34,7 +34,8 @@ def MakeFloodRangeImage():
     oldHeight = -1e100
     while True:
         height = receiver.height
-        if height and abs(height-oldHeight) >= 0.5 and height > 0.:
+        if height and abs(height-oldHeight) >= 0.3:
+            height = 0. if height <= 0. else height
             oldHeight = height
             print("------------Making Flood Range Image-----------")
             model.Tune(height, export=True)

@@ -11,7 +11,15 @@ let imgURL = location.protocol + "//" + location.host + "/static/img/flood_range
 let imgJSON = location.protocol + "//" + location.host + "/static/img/coordinate.json";
 let xhr = new XMLHttpRequest();
 
-xhr.open("GET", imgJSON, true);
+while (true) {
+    try {
+        xhr.open("GET", imgJSON, true);
+        break;
+    } catch (e) {
+        continue;
+    }
+}
+
 xhr.send(null);
 xhr.onload = () => {
 

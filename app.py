@@ -14,7 +14,10 @@ def ShowMap():
 
 @app.route("/height", methods=["GET"])
 def DownLoadFloodData():
-    return send_file(args.heightData, mimetype="text/csv")
+    return send_file(args.heightData,
+                     mimetype="text/csv",
+                     as_attachment=True,
+                     attachment_filename="flood_height.csv")
 
 
 main.Main()

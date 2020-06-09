@@ -5,12 +5,19 @@ from pyreproj import Reprojector
 # Coordinate system: WGS84 => 4326, TWD97_Zone121 => 3826 .
 rp = Reprojector()
 Func = rp.get_transformation_function(3826, 4326)
+IFunc = rp.get_transformation_function(4326, 3826)
 
 
 def Transform(tx, ty):
     latLng = list(Func(tx, ty))
 
     return latLng
+
+
+def InverseTransform(lat, lng):
+    txy = list(IFunc(lat, lng))
+
+    return txy
 
 
 def GetLatLng():

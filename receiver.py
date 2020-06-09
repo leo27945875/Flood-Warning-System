@@ -35,6 +35,7 @@ class Receiver(object):
                         print(f"{self.height} cm")
 
                         f.write(f"{date},{clock},{self.height}\n")
+                        f.flush()
 
                 except Exception as e:
                     print(e)
