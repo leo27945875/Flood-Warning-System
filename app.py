@@ -12,9 +12,9 @@ def ShowMap():
     return render_template("index.html")
 
 
-# @app.route("/height", method=["GET"])
-# def DownLoadFloodData():
-#     return send_file(args.heightData)
+@app.route("/height", methods=["GET"])
+def DownLoadFloodData():
+    return send_file(args.heightData, mimetype="text/csv")
 
 
 main.Main()
