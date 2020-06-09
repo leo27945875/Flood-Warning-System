@@ -11,6 +11,7 @@ def ShowMap():
     return render_template("index.html")
 
 
+main.Main()
+
 if __name__ == "__main__":
-    main.Main()
-    app.run(host="example.com", port=3013, threaded=True)
+    app.run(host="example.com", port=3014, threaded=True)
