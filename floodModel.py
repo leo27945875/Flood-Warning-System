@@ -133,13 +133,15 @@ class Model(object):
 
             elif fileExt == ".png":
                 print("Saving image as .png ...")
-                r = np.zeros([self.params["nrows"], self.params["ncols"]])
-                g = np.zeros([self.params["nrows"], self.params["ncols"]])
-                b = self.flood*0.6
-                a = self.flood
+                r = np.ones(
+                    [self.params["nrows"], self.params["ncols"]])*0.047058823529411764
+                g = np.ones(
+                    [self.params["nrows"], self.params["ncols"]])*0.615686274509804
+                b = self.flood
+                a = self.flood*0.7
                 imsave(self.target, np.stack([r, g, b, a], axis=-1))
         else:
-            print("Don't save any image !")
+            print("Didn't save any image !")
 
         print("Done!")
 

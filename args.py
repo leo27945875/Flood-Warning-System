@@ -1,12 +1,14 @@
 
 def Init():
 
-    global serverURL, regAddr, geometryImage, floodRange, start, startOnGrid, receiver, model
+    global serverURL, regAddr, updateTime, root, coordinateImage, floodRange, start, startOnGrid, receiver, model
 
     serverURL = 'https://demo.iottalk.tw/'
     regAddr = '0511238'
-    geometryImage = "./data/nctu_6m_TWD97.asc"
-    floodRange = "./data/flood_range.png"
+    updateTime = 5.
+    root = "./static/img/"
+    coordinateImage = root+"nctu_6m_TWD97.asc"
+    floodRange = root+"flood_range.png"
     start = (249712.1, 2742474.0)
     startOnGrid = False
     receiver = None

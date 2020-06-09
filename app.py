@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import render_template
 import os
+import main
 
 app = Flask(__name__)
 
@@ -11,4 +12,5 @@ def ShowMap():
 
 
 if __name__ == "__main__":
-    app.run()
+    main.Main()
+    app.run(host="example.com", port=3005, threaded=True)

@@ -1,32 +1,36 @@
 import math
 import args
+from pyreproj import Reprojector
 
 
-def Transform(ty, tx):
-    lat = ty * 0.00000899823754
-    lng = 121 + ((tx - 250000) * 0.000008983152841195214 /
-                 math.cos(math.radians(lat)))
+# Coordinate system: WGS84 => 4326, TWD97_Zone121 => 3826 .
+rp = Reprojector()
+Func = rp.get_transformation_function(3826, 4326)
 
-    return [lat, lng]
+
+def Transform(tx, ty):
+    latLng = list(Func(tx, ty))
+
+    return latLng
 
 
 def GetLatLng():
     ncols = args.model.params["ncols"]
     nrows = args.model.params["nrows"]
-    yll = args.model.params["yllcorner"]
     xll = args.model.params["xllcorner"]
+    yll = args.model.params["yllcorner"]
     size = args.model.params["cellsize"]
     start = args.start
 
-    yul = yll+ncols*size
     xul = xll
+    yul = yll+ncols*size
 
-    ylr = yll
     xlr = xll+nrows*size
+    ylr = yll
 
-    ul = Transform(yul, xul)
-    lr = Transform(ylr, xlr)
+    ul = Transform(xul, yul)
+    lr = Transform(xlr, ylr)
     if not args.startOnGrid:
-        start = Transform(start[1], start[0])
+        start = Transform(start[0], start[1])
 
     return {"UpperLeft": ul, "LowwerRight": lr, "Start": start}

@@ -6,8 +6,8 @@ let map = L.map('map', {
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-let imgURL = "static/img/flood_range.png";
-let imgJSON = "static/img/coordinate.json";
+let imgURL = "../static/img/flood_range.png";
+let imgJSON = "../static/img/coordinate.json";
 let coordinate = {
     "UpperLeft": [24.79183338625162, 120.99176139902661],
     "LowwerRight": [24.781595108230306, 121.00279871880039],

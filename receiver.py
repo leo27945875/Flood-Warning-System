@@ -10,13 +10,20 @@ class Receiver(object):
         self.height = None
         self.serverURL = serverURL
         self.regAddr = regAddr
+        self.profile = None
 
-    def ReceiveData(self):
+    def __repr__(self):
+        site = super(Receiver, self).__repr__()
+
+        return "\n"+"-"*50+"\n"+f"{site}\n"+'-'*50+f"\n{self.profile}"
+
+    def ReceiveData(self, file, updateTime):
         DAN.profile['dm_name'] = 'FloodMoniter'
         DAN.profile['df_list'] = ['FloodHeightIn', 'FloodHeightOut']
         DAN.profile['d_name'] = 'FloodOutput'
         DAN.device_registration_with_retry(self.serverURL, self.regAddr)
-        with open("./data/flood_height.csv", "a") as f:
+        self.profile = DAN.profile
+        with open(file, "a") as f:
             while True:
                 try:
                     ODF_data = DAN.pull('FloodHeightOut')
@@ -39,4 +46,4 @@ class Receiver(object):
                         print('Connection failed due to unknow reasons.')
                         time.sleep(1)
 
-                time.sleep(5)
+                time.sleep(updateTime)
