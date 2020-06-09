@@ -14,6 +14,17 @@ let coordinate = {
     "Start": [24.78960351283472, 120.99715264006558]
 }
 
+let icon = L.icon({
+    iconUrl: "https://image.flaticon.com/icons/svg/1627/1627389.svg",
+    iconSize: [40, 40],
+    popupAnchor: [0, -30]
+})
+let start = L.marker(coordinate["Start"], {
+    icon: icon
+}).addTo(map);
+start.bindPopup("Raspberry pi 所在地。");
+
+
 let flood = L.imageOverlay(imgURL, [coordinate["UpperLeft"], coordinate["LowwerRight"]]).addTo(map);;
 let intervalID = setInterval(() => {
     flood.remove();
