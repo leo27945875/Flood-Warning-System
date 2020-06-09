@@ -28,6 +28,13 @@ xhr.onload = () => {
     }).addTo(map);
     start.bindPopup("Raspberry pi 所在地。");
 
+    // 繪製有地形圖資的範圍:
+    let rectangle = L.rectangle([coordinate["UpperLeft"], coordinate["LowwerRight"]], {
+        fill: false,
+        color: "#333",
+        dashArray: [0, 10, 30, 10]
+    }).addTo(map);
+
     // 繪製淹水範圍圖:
     let flood = L.imageOverlay(imgURL, [coordinate["UpperLeft"], coordinate["LowwerRight"]]).addTo(map);;
     let intervalID = setInterval(() => {

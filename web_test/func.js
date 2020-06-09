@@ -24,6 +24,11 @@ let start = L.marker(coordinate["Start"], {
 }).addTo(map);
 start.bindPopup("Raspberry pi 所在地。");
 
+let rectangle = L.rectangle([coordinate["UpperLeft"], coordinate["LowwerRight"]], {
+    fill: false,
+    color: "#333",
+    dashArray: [0, 10, 30, 10]
+}).addTo(map);
 
 let flood = L.imageOverlay(imgURL, [coordinate["UpperLeft"], coordinate["LowwerRight"]]).addTo(map);;
 let intervalID = setInterval(() => {
