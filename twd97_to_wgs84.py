@@ -1,4 +1,3 @@
-import math
 import args
 from pyreproj import Reprojector
 
