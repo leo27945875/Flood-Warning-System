@@ -22,5 +22,5 @@ def DownLoadFloodData():
 
 main.Main()
 
-if __name__ == "__main__":
-    app.run(host="example.com", port=3015, threaded=True)
+# if __name__ == "__main__":
+#     app.run(host="example.com", port=3015, threaded=True)
