@@ -20,6 +20,7 @@ def DownLoadFloodData():
                      attachment_filename="flood_height.csv")
 
 
+print("WERKZEUG_RUN_MAIN = ", os.environ.get("WERKZEUG_RUN_MAIN"))
 main.Main()
 
 
