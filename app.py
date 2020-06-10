@@ -5,7 +5,6 @@ import main
 import args
 
 app = Flask(__name__)
-app.config["DEBUG"] = False
 
 
 @app.route("/")
@@ -21,8 +20,7 @@ def DownLoadFloodData():
                      attachment_filename="flood_height.csv")
 
 
-if os.environ.get("WERKZEUG_RUN_MAIN") == "true" and not app.debug:
-    main.Main()
+main.Main()
 
 
 if __name__ == "__main__":
