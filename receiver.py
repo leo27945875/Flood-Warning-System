@@ -5,7 +5,6 @@ from iottalk import DAN
 
 class Receiver(object):
     def __init__(self, serverURL, regAddr):
-        Receiver.initFlag = True
         self.height = None
         self.serverURL = serverURL
         self.regAddr = regAddr

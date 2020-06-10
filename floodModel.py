@@ -148,7 +148,7 @@ class Model(object):
     def Tune(self, newMask, export=False):
         print("Recompute the flood range ...")
         self.mask = newMask
+        self.export = export
         self.MaskImage()
         self.FloodFillAlgorithm()
-        if export:
-            self.Export()
+        self.Export()

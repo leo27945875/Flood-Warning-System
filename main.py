@@ -5,14 +5,16 @@ import args
 import time
 import json
 import random
+import pytz
 import datetime
 import threading
 
 
 def IoTInit():
 
-    global receiver, model
+    global receiver, model, timezone
 
+    print("Initializing the setting of IoT ...")
     args.Init()
     args.receiver = Receiver(args.serverURL, args.regAddr)
     args.model = Model(source=args.coordinateImage,
@@ -24,10 +26,12 @@ def IoTInit():
 
     receiver = args.receiver
     model = args.model
+    timezone = pytz.timezone(args.timezone)
 
 
 def SaveHeightData(file, height):
     now = datetime.datetime.now()
+    now = timezone.localize(now)
     date = f"{now.year}/{now.month}/{now.day}"
     clock = f"{now.hour}:{now.minute}:{now.second}"
     data = f"{date}, {clock}, {height}"
@@ -37,18 +41,16 @@ def SaveHeightData(file, height):
 
 
 def ReceiveFloodHeight():
-
-    global receiver
-
+    print("Start receiving height data !")
     receiver.ReceiveData(updateTime=args.updateTime)
 
 
 def MakeFloodRangeImage():
-
-    global model
-
-    oldHeight = -1e100
+    time.sleep(3)
+    print("Start making flood range image !")
+    print("="*50+"\n")
     with open(args.heightData, "a") as f:
+        oldHeight = -1e100
         while True:
             if args.mode == "real":
                 height = receiver.height
@@ -62,7 +64,7 @@ def MakeFloodRangeImage():
             if height and abs(height-oldHeight) >= 0.3:
                 height = 0. if height <= 0. else height
                 oldHeight = height
-                print("------------Making Flood Range Image-----------")
+                print("-------------Making Flood Range Image-------------")
                 model.Tune(height, export=True)
                 print("-"*50+'\n')
 

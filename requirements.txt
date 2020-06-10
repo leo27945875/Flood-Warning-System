@@ -3,4 +3,5 @@ gunicorn
 numpy
 matplotlib
 datetime
+pytz
 pyreproj
