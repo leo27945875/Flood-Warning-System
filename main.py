@@ -30,8 +30,7 @@ def IoTInit():
 
 
 def SaveHeightData(file, height):
-    now = datetime.datetime.now()
-    now = timezone.localize(now)
+    now = datetime.datetime.now(timezone)
     date = f"{now.year}/{now.month}/{now.day}"
     clock = f"{now.hour}:{now.minute}:{now.second}"
     data = f"{date}, {clock}, {height}"
@@ -47,8 +46,7 @@ def ReceiveFloodHeight():
 
 def MakeFloodRangeImage():
     time.sleep(3)
-    print("Start making flood range image !")
-    print("="*50+"\n")
+    print("Start making flood range image !\n"+"="*50+"\n")
     with open(args.heightData, "a") as f:
         oldHeight = -1e100
         while True:
