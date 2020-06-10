@@ -9,12 +9,20 @@ IFunc = rp.get_transformation_function(4326, 3826)
 
 
 def Transform(tx, ty):
+    """
+    For: TDW97_Zone121(x, y) => WGS84(lat, lng)
+    """
+
     latLng = list(Func(tx, ty))
 
     return latLng
 
 
 def InverseTransform(lat, lng):
+    """
+    For: WGS84(lat, lng) => TWD97_Zone121(x, y)
+    """
+
     txy = list(IFunc(lat, lng))
 
     return txy

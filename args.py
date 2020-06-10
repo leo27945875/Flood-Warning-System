@@ -1,7 +1,7 @@
 
 def Init():
 
-    global serverURL, regAddr, updateTime, root, coordinateImage, floodRange, heightData, start, startOnGrid, receiver, model
+    global serverURL, regAddr, updateTime, root, coordinateImage, floodRange, heightData, start, startOnGrid, receiver, model, mode
 
     serverURL = 'https://demo.iottalk.tw/'
     regAddr = '0511238'
@@ -14,3 +14,4 @@ def Init():
     startOnGrid = False
     receiver = None
     model = None
+    mode = "test"
