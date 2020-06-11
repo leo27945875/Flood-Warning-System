@@ -86,7 +86,7 @@ def MakeFloodRangeImage():
                     print("-"*50+'\n')
                     oldHeight = height
             else:
-                print("No data received ...")
+                print("\nNo data received ...\n")
 
             time.sleep(args.updateTime)
 
