@@ -79,8 +79,8 @@ def MakeFloodRangeImage():
             height = ReceiveData()
             if height:
                 SaveHeightData(file=f, height=height)
+                height = 0. if height <= 0. else height
                 if abs(height-oldHeight) >= 0.3:
-                    height = 0. if height <= 0. else height
                     print("-------------Making Flood Range Image-------------")
                     model.Tune(height, export=True)
                     print("-"*50+'\n')
