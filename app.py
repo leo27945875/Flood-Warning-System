@@ -24,4 +24,4 @@ main.Main()
 
 
 if __name__ == "__main__":
-    app.run(host="example.com", port=5000, threaded=True)
+    app.run(port=3024, threaded=True)

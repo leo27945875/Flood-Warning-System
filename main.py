@@ -1,5 +1,5 @@
 from receiver import Receiver
-from floodModel import Model
+from flood_model import Model
 import twd97_to_wgs84
 import args
 import time
