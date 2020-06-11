@@ -85,6 +85,8 @@ def MakeFloodRangeImage():
                     model.Tune(height, export=True)
                     print("-"*50+'\n')
                     oldHeight = height
+            else:
+                print("No data received ...")
 
             time.sleep(args.updateTime)
 
