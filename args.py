@@ -19,7 +19,7 @@ def Init():
     startOnGrid = False
 
     # Other settiings:
-    mode = "test"
+    mode = "real"
     timezone = "Asia/Taipei"
 
     # Main objects references:
