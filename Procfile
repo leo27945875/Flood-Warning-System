@@ -1,1 +1,1 @@
-web flask run --no-reload
+web gunicorn app:app
