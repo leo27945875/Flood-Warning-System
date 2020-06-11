@@ -56,9 +56,8 @@ class Model(object):
         else:
             self.skip = 6
         finally:
-            print("Opening image...")
             self.graph = np.loadtxt(self.source, skiprows=self.skip)
-            print("Image opened.")
+            print("Geometry image has been loaded !")
 
     def FindStart(self):
         if not self.startOnGrid:
@@ -87,7 +86,7 @@ class Model(object):
             height = wet.shape[0]-1
             flood = np.zeros_like(wet, dtype=np.int8)
 
-            print("Beginning flood fill.")
+            print("Beginning flood fill algorithm.")
             while fill:
                 x, y = fill.pop()
 

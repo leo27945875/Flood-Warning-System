@@ -9,9 +9,11 @@ class Receiver(object):
     """
 
     def __init__(self, serverURL, regAddr):
-        self.height = None
         self.serverURL = serverURL
         self.regAddr = regAddr
+
+        self.height = None
+        self.stop = None
         self.profile = None
 
     def __repr__(self):
@@ -25,11 +27,16 @@ class Receiver(object):
         DAN.profile['d_name'] = 'FloodOutput'
         DAN.device_registration_with_retry(self.serverURL, self.regAddr)
         self.profile = DAN.profile
+        self.stop = True
         while True:
             try:
                 ODF_data = DAN.pull('FloodHeightOut')
                 if ODF_data != None:
                     self.height = ODF_data[0]
+                    self.stop = False
+                else:
+                    self.height = None
+                    self.stop = True
 
             except Exception as e:
                 print(e)

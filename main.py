@@ -15,7 +15,7 @@ def IoTInit():
     Initialize the environment of this IoT project setting:
     """
 
-    global receiver, model, timezone
+    global receiver, model, timezone, ReceiveData
 
     print("Initializing the setting of IoT ...")
     args.Init()
@@ -27,9 +27,20 @@ def IoTInit():
                        startOnGrid=args.startOnGrid,
                        export=True)()
 
+    def ReceiveDataFunc():
+        if args.mode == "real":
+            height = receiver.height
+        elif args.mode == "test":
+            height = random.randint(0, 10)
+        else:
+            raise ValueError("args.mode must be one of 'real' or 'test'")
+
+        return height
+
     receiver = args.receiver
     model = args.model
     timezone = pytz.timezone(args.timezone)
+    ReceiveData = ReceiveDataFunc
 
 
 def SaveHeightData(file, height):
@@ -65,21 +76,15 @@ def MakeFloodRangeImage():
     with open(args.heightData, "a") as f:
         oldHeight = -1e100
         while True:
-            if args.mode == "real":
-                height = receiver.height
-            elif args.mode == "test":
-                height = random.randint(0, 10)
-            else:
-                raise ValueError("args.mode must be one of 'real' or 'test'")
-
+            height = ReceiveData()
             if height:
                 SaveHeightData(file=f, height=height)
                 if abs(height-oldHeight) >= 0.3:
                     height = 0. if height <= 0. else height
-                    oldHeight = height
                     print("-------------Making Flood Range Image-------------")
                     model.Tune(height, export=True)
                     print("-"*50+'\n')
+                    oldHeight = height
 
             time.sleep(args.updateTime)
 
