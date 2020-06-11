@@ -1,1 +1,1 @@
-flask run --no-reload
+web flask run --no-reload
