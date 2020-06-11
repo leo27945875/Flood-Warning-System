@@ -1,5 +1,8 @@
 
 def Init():
+    """
+    Initialize the basic arguments:
+    """
 
     global serverURL, regAddr, updateTime, root, coordinateImage, floodRange, heightData, start, startOnGrid, receiver, model, mode, timezone
 

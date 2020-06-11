@@ -5,7 +5,7 @@ let map = L.map('map', {
 });
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-// 取得各式座標資訊:
+// AJAX取得各式座標資訊:
 let coordinate;
 let imgURL = location.protocol + "//" + location.host + "/static/img/flood_range.png";
 let imgJSON = location.protocol + "//" + location.host + "/static/img/coordinate.json";

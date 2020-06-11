@@ -11,6 +11,9 @@ import threading
 
 
 def IoTInit():
+    """
+    Initialize the environment of this IoT project setting:
+    """
 
     global receiver, model, timezone
 
@@ -30,6 +33,10 @@ def IoTInit():
 
 
 def SaveHeightData(file, height):
+    """
+    Save the flood height data received from the IoT device to a CSV file:
+    """
+
     now = datetime.datetime.now(timezone)
     date = f"{now.year}/{now.month}/{now.day}"
     clock = f"{now.hour}:{now.minute}:{now.second}"
@@ -40,11 +47,19 @@ def SaveHeightData(file, height):
 
 
 def ReceiveFloodHeight():
+    """
+    Receive the flood height data detected by the IoT device:
+    """
+
     print("Start receiving height data !")
     receiver.ReceiveData(updateTime=args.updateTime)
 
 
 def MakeFloodRangeImage():
+    """
+    Make images of the range of the flood:
+    """
+
     time.sleep(3)
     print("Start making flood range image !\n"+"="*50+"\n")
     with open(args.heightData, "a") as f:
@@ -57,19 +72,23 @@ def MakeFloodRangeImage():
             else:
                 raise ValueError("args.mode must be one of 'real' or 'test'")
 
-            SaveHeightData(file=f, height=height)
-
-            if height and abs(height-oldHeight) >= 0.3:
-                height = 0. if height <= 0. else height
-                oldHeight = height
-                print("-------------Making Flood Range Image-------------")
-                model.Tune(height, export=True)
-                print("-"*50+'\n')
+            if height:
+                SaveHeightData(file=f, height=height)
+                if abs(height-oldHeight) >= 0.3:
+                    height = 0. if height <= 0. else height
+                    oldHeight = height
+                    print("-------------Making Flood Range Image-------------")
+                    model.Tune(height, export=True)
+                    print("-"*50+'\n')
 
             time.sleep(args.updateTime)
 
 
 def Main():
+    """
+    The main program of this IoT project:
+    """
+
     # IoT setting:
     IoTInit()
 

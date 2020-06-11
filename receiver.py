@@ -4,6 +4,10 @@ from iottalk import DAN
 
 
 class Receiver(object):
+    """
+    A class which can pull the data on IoTtalk after being instantiated:
+    """
+
     def __init__(self, serverURL, regAddr):
         self.height = None
         self.serverURL = serverURL

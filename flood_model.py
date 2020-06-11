@@ -5,7 +5,11 @@ from matplotlib.pyplot import imsave
 
 
 class Model(object):
-    def __init__(self, source, target, mask, start, startOnGrid=False, export=False):
+    """
+    A class which can run flood-fill algorithm according to the height data received by receiver objects after being instantiated:
+    """
+
+    def __init__(self, source, target, mask, start, startOnGrid, export=False):
         self.source = source
         self.target = target
         self.mask = mask
@@ -113,6 +117,7 @@ class Model(object):
                         fill.add(south)
 
             self.flood = flood
+            self.wet = None
             print("Finished Flood fill.")
         else:
             raise Exception(

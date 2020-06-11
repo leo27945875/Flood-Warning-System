@@ -10,7 +10,7 @@ IFunc = rp.get_transformation_function(4326, 3826)
 
 def Transform(tx, ty):
     """
-    For: TDW97_Zone121(x, y) => WGS84(lat, lng)
+    For TDW97_Zone121(x, y) => WGS84(lat, lng):
     """
 
     latLng = list(Func(tx, ty))
@@ -20,7 +20,7 @@ def Transform(tx, ty):
 
 def InverseTransform(lat, lng):
     """
-    For: WGS84(lat, lng) => TWD97_Zone121(x, y)
+    For WGS84(lat, lng) => TWD97_Zone121(x, y):
     """
 
     txy = list(IFunc(lat, lng))
@@ -29,6 +29,10 @@ def InverseTransform(lat, lng):
 
 
 def GetLatLng():
+    """
+    Get the coordinate of the IoT device and monited area:
+    """
+
     ncols = args.model.params["ncols"]
     nrows = args.model.params["nrows"]
     xll = args.model.params["xllcorner"]
