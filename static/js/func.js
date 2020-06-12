@@ -32,12 +32,12 @@ xhr.onload = () => {
         iconUrl: "https://image.flaticon.com/icons/svg/1627/1627389.svg",
         iconSize: [40, 40],
         iconAnchor: [20, 40],
-        popupAnchor: [0, -30]
+        popupAnchor: [0, -35]
     })
     let start = L.marker(coordinate["Start"], {
         icon: icon
     }).addTo(map);
-    start.bindPopup("Raspberry pi 所在地。");
+    start.bindPopup(`<h3 style="text-align:center">Raspberry pi 所在地</h3>`);
     start.openPopup();
 
     // 繪製有地形圖資的範圍:
@@ -67,7 +67,11 @@ xhr.onload = () => {
         xhr.send(null);
         xhr.onload = () => {
             height = JSON.parse(xhr.responseText)["MostNewHeightData"];
-            start.bindPopup(`Raspberry pi 所在地。\n目前偵測到淹水高度 = ${height} (cm)`);
+            start.bindPopup(`
+            <h3 style="text-align:center">Raspberry pi 所在地</h3>
+                <p>目前偵測到淹水高度 = 
+                    <span style="color:red">${height}</span> (cm)
+                </p>`);
         }
 
         console.log(`Update flood range (${now.toString()}) !`);
