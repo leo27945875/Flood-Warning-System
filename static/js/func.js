@@ -43,7 +43,16 @@ xhr.onload = () => {
     xhr.open("GET", height, true);
     xhr.send(null);
     xhr.onload = () => {
-        height = JSON.parse(xhr.responseText);
+        while (true) {
+            try {
+                height = JSON.parse(xhr.responseText);
+                break;
+            } catch (e) {
+                console.log(e.message);
+                continue;
+            }
+        }
+
         height = height["MostNewHeightData"];
         start.bindPopup(`
         <h3 style="text-align:center">Raspberry pi 所在地</h3>
