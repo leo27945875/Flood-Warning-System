@@ -6,7 +6,8 @@ from matplotlib.pyplot import imsave
 
 class Model(object):
     """
-    A class which can run flood-fill algorithm according to the height data received by receiver objects after being instantiated:
+    A class which can run flood-fill algorithm according to the height data received by receiver objects
+    and geometry of the monited area after being instantiated:
     """
 
     def __init__(self, source, target, mask, start, startOnGrid, export=False):
