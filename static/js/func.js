@@ -39,7 +39,7 @@ xhr.onload = () => {
         icon: icon
     }).addTo(map);
 
-    xhr.open("GET", newHeightURL, true);
+    xhr.open("GET", heightJSON, true);
     xhr.send(null);
     xhr.onload = () => {
         height = JSON.parse(xhr.responseText)["MostNewHeightData"];
@@ -48,9 +48,9 @@ xhr.onload = () => {
             <p>目前偵測到淹水高度 = 
                 <span style="color:red">${height}</span> (cm)
             </p>`);
+        start.openPopup();
     }
 
-    start.openPopup();
 
     // 繪製有地形圖資的範圍:
     let rectangle = L.rectangle([coordinate["UpperLeft"], coordinate["LowwerRight"]], {
