@@ -6,7 +6,7 @@ def Init():
 
     global serverURL, regAddr, updateTime, root, coordinateImage, floodRange, \
         heightData, start, startOnGrid, mode, timezone, receiver, model, sender, \
-        myGmail, myPW, addresses, thresholds, nextTimeInterval
+        sendEmail, myGmail, myPW, addresses, thresholds, nextTimeInterval
 
     # IoTtalk settings:
     serverURL = 'https://demo.iottalk.tw/'
@@ -33,6 +33,7 @@ def Init():
     sender = None
 
     # E-mail address setting:
+    sendEmail = False
     myGmail = "ezioatiar@gmail.com"
     myPW = "a8077606"
     addresses = "my.txt"

@@ -124,11 +124,13 @@ def Main():
         target=ReceiveFloodHeight, name="ReceiveFloodHeight")
     thread1 = threading.Thread(
         target=MakeFloodRangeImage, name="MakeFloodRangeImage")
-    thread2 = threading.Thread(
-        target=JudgeToSendEmail, name="JudgeToSendEmail")
     thread0.start()
     thread1.start()
-    thread2.start()
+
+    if args.sendEmail:
+        thread2 = threading.Thread(
+            target=JudgeToSendEmail, name="JudgeToSendEmail")
+        thread2.start()
 
     # Export coordinate data:
     coordinate = twd97_to_wgs84.GetLatLng()
