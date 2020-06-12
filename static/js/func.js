@@ -34,10 +34,22 @@ xhr.onload = () => {
         iconAnchor: [20, 40],
         popupAnchor: [0, -35]
     })
+
     let start = L.marker(coordinate["Start"], {
         icon: icon
     }).addTo(map);
-    start.bindPopup(`<h3 style="text-align:center">Raspberry pi 所在地</h3>`);
+
+    xhr.open("GET", newHeightURL, true);
+    xhr.send(null);
+    xhr.onload = () => {
+        height = JSON.parse(xhr.responseText)["MostNewHeightData"];
+        start.bindPopup(`
+        <h3 style="text-align:center">Raspberry pi 所在地</h3>
+            <p>目前偵測到淹水高度 = 
+                <span style="color:red">${height}</span> (cm)
+            </p>`);
+    }
+
     start.openPopup();
 
     // 繪製有地形圖資的範圍:
@@ -52,7 +64,6 @@ xhr.onload = () => {
     let intervalID = setInterval(() => {
 
         flood.remove();
-        //start.closePopup().unbindPopup();
 
         let now = new Date();
         let xhr = new XMLHttpRequest();
