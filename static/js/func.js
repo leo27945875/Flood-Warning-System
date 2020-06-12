@@ -40,7 +40,7 @@ xhr.onload = () => {
         icon: icon
     }).addTo(map);
 
-    xhr.open("GET", height, true);
+    xhr.open("GET", heightJSON, true);
     xhr.send(null);
     xhr.onload = () => {
         setTimeout(() => {
