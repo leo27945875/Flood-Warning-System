@@ -51,4 +51,4 @@ def GetLatLng():
     if not args.startOnGrid:
         start = Transform(start[0], start[1])
 
-    return {"UpperLeft": ul, "LowwerRight": lr, "Start": start}
+    return {"UpperLeft": ul, "LowwerRight": lr, "Start": start, "UpdateTime": args.updateTime}

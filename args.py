@@ -40,4 +40,4 @@ def Init():
     myPW = "a8077606"
     addresses = "my.txt"
     thresholds = [5, 2, 0]
-    nextTimeInterval = 3600
+    nextTimeInterval = updateTime*6

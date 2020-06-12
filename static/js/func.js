@@ -76,5 +76,5 @@ xhr.onload = () => {
 
         console.log(`Update flood range (${now.toString()}) !`);
 
-    }, 5000);
+    }, coordinate["UpdateTime"] * 1000);
 }
