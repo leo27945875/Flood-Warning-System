@@ -11,7 +11,7 @@ def Init():
     # IoTtalk settings:
     serverURL = 'https://demo.iottalk.tw/'
     regAddr = '0511238'
-    updateTime = 5
+    updateTime = 600
     mode = "test"
 
     # File settings:
@@ -40,4 +40,4 @@ def Init():
     myPW = "a8077606"
     addresses = "my.txt"
     thresholds = [5, 2, 0]
-    nextTimeInterval = 20
+    nextTimeInterval = 3600
