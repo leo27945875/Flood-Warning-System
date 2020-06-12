@@ -23,7 +23,7 @@ def IoTInit():
     print("Initializing the setting of IoT ...")
     args.Init()
     args.receiver = Receiver(args.serverURL, args.regAddr)
-    args.model = Model(source=args.coordinateImage,
+    args.model = Model(source=args.geometryImage,
                        target=args.floodRange,
                        mask=0.,
                        start=args.start,
@@ -50,6 +50,12 @@ def SaveHeightData(file, height):
     print("\n"+data+"(cm)")
     file.write(data+"\n")
     file.flush()
+
+
+def SaveMostNewHeightData(fileName, height):
+    with open(fileName, "w") as f:
+        json.dump({"MostNewHeightData": height}, f)
+        f.flush()
 
 
 def JudgeToSendEmail():
@@ -98,8 +104,11 @@ def MakeFloodRangeImage():
         while True:
             height = receiver.height
             if height is not None:
-                SaveHeightData(file=f, height=height)
+                SaveHeightData(file=f,
+                               height=height)
                 height = 0. if height <= 0. else height
+                SaveMostNewHeightData(fileName=args.heightDataNew,
+                                      height=height)
                 if abs(height-oldHeight) >= 0.3:
                     print("-------------Making Flood Range Image-------------")
                     model.Tune(height, export=True)
@@ -108,7 +117,7 @@ def MakeFloodRangeImage():
             else:
                 print("\nNo data received ...\n")
 
-            time.sleep(args.updateTime-0.05)
+            time.sleep(args.updateTime-0.07)
 
 
 def Main():
@@ -134,7 +143,7 @@ def Main():
 
     # Export coordinate data:
     coordinate = twd97_to_wgs84.GetLatLng()
-    with open(args.root+"coordinate.json", "w") as f:
+    with open(args.coordinateData, "w") as f:
         json.dump(coordinate, f)
 
     print("Got the coordinate of monited range !")

@@ -7,8 +7,10 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
 // AJAX取得各式座標資訊:
 let coordinate;
+let height;
 let imgURL = location.protocol + "//" + location.host + "/static/img/flood_range.png";
 let imgJSON = location.protocol + "//" + location.host + "/static/img/coordinate.json";
+let heightJSON = location.protocol + "//" + location.host + "/static/img/flood_new_height.json";
 let xhr = new XMLHttpRequest();
 
 while (true) {
@@ -36,6 +38,7 @@ xhr.onload = () => {
         icon: icon
     }).addTo(map);
     start.bindPopup("Raspberry pi 所在地。");
+    start.openPopup();
 
     // 繪製有地形圖資的範圍:
     let rectangle = L.rectangle([coordinate["UpperLeft"], coordinate["LowwerRight"]], {
@@ -44,14 +47,29 @@ xhr.onload = () => {
         dashArray: [0, 10, 30, 10]
     }).addTo(map);
 
-    // 繪製淹水範圍圖:
-    let flood = L.imageOverlay(imgURL, [coordinate["UpperLeft"], coordinate["LowwerRight"]]).addTo(map);;
+    // 不斷更新資訊:
+    let flood = L.imageOverlay(imgURL, [coordinate["UpperLeft"], coordinate["LowwerRight"]]).addTo(map);
     let intervalID = setInterval(() => {
 
         flood.remove();
+        //start.closePopup().unbindPopup();
+
         let now = new Date();
-        let newURL = `${imgURL}?ver=${now.toString().split(" ").join("_")}`;
-        flood = L.imageOverlay(newURL, [coordinate["UpperLeft"], coordinate["LowwerRight"]]).addTo(map);
+        let xhr = new XMLHttpRequest();
+        let newCoordinateURL = `${imgURL}?ver=${now.toString().split(" ").join("_")}`;
+        let newHeightURL = `${heightJSON}?ver=${now.toString().split(" ").join("_")}`;
+
+        // 繪製淹水範圍圖:
+        flood = L.imageOverlay(newCoordinateURL, [coordinate["UpperLeft"], coordinate["LowwerRight"]]).addTo(map);
+
+        // 更改Popup內容:
+        xhr.open("GET", newHeightURL, true);
+        xhr.send(null);
+        xhr.onload = () => {
+            height = JSON.parse(xhr.responseText)["MostNewHeightData"];
+            start.bindPopup(`Raspberry pi 所在地。\n目前偵測到淹水高度 = ${height} (cm)`);
+        }
+
         console.log(`Update flood range (${now.toString()}) !`);
 
     }, 5000);

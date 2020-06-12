@@ -4,9 +4,9 @@ def Init():
     Initialize the basic arguments:
     """
 
-    global serverURL, regAddr, updateTime, root, coordinateImage, floodRange, \
-        heightData, start, startOnGrid, mode, timezone, receiver, model, sender, \
-        sendEmail, myGmail, myPW, addresses, thresholds, nextTimeInterval
+    global serverURL, regAddr, updateTime, root, geometryImage, floodRange, heightData, heightDataNew, \
+        coordinateData, start, startOnGrid, mode, timezone, receiver, model, sender, sendEmail, myGmail, \
+        myPW, addresses, thresholds, nextTimeInterval
 
     # IoTtalk settings:
     serverURL = 'https://demo.iottalk.tw/'
@@ -16,9 +16,11 @@ def Init():
 
     # File settings:
     root = "./static/img/"
-    coordinateImage = root+"nctu_6m_TWD97.asc"
+    geometryImage = root+"nctu_6m_TWD97.asc"
     floodRange = root+"flood_range.png"
     heightData = root+"flood_height.csv"
+    heightDataNew = root+"flood_new_height.json"
+    coordinateData = root+"coordinate.json"
 
     # Flood model setting:
     start = (249712.1, 2742474.0)
