@@ -43,16 +43,15 @@ xhr.onload = () => {
     xhr.open("GET", heightJSON, true);
     xhr.send(null);
     xhr.onload = () => {
-        setTimeout(() => {
-            height = JSON.parse(xhr.responseText);
-            height = height["MostNewHeightData"];
-            start.bindPopup(`
-            <h3 style="text-align:center">Raspberry pi 所在地</h3>
-                <p>目前偵測到淹水高度 = 
-                    <span style="color:red">${height}</span> (cm)
-                </p>`);
-            start.openPopup();
-        }, 8000);
+        height = JSON.parse(xhr.responseText);
+        height = height["MostNewHeightData"];
+        start.bindPopup(`
+        <h3 style="text-align:center">Raspberry pi 所在地</h3>
+            <p>目前偵測到淹水高度 = 
+                <span style="color:red">${height}</span> (cm)
+            </p>`);
+
+        start.openPopup();
     };
 
 
