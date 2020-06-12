@@ -18,6 +18,7 @@ while (true) {
         xhr.open("GET", imgJSON, true);
         break;
     } catch (e) {
+        console.log(e.message);
         continue;
     }
 }
@@ -33,23 +34,24 @@ xhr.onload = () => {
         iconSize: [40, 40],
         iconAnchor: [20, 40],
         popupAnchor: [0, -35]
-    })
+    });
 
     let start = L.marker(coordinate["Start"], {
         icon: icon
     }).addTo(map);
 
-    xhr.open("GET", heightJSON, true);
+    xhr.open("GET", height, true);
     xhr.send(null);
     xhr.onload = () => {
-        height = JSON.parse(xhr.responseText)["MostNewHeightData"];
+        height = JSON.parse(xhr.responseText);
+        height = height["MostNewHeightData"];
         start.bindPopup(`
         <h3 style="text-align:center">Raspberry pi 所在地</h3>
             <p>目前偵測到淹水高度 = 
                 <span style="color:red">${height}</span> (cm)
             </p>`);
         start.openPopup();
-    }
+    };
 
 
     // 繪製有地形圖資的範圍:
@@ -74,10 +76,12 @@ xhr.onload = () => {
         flood = L.imageOverlay(newCoordinateURL, [coordinate["UpperLeft"], coordinate["LowwerRight"]]).addTo(map);
 
         // 更改Popup內容:
+
         xhr.open("GET", newHeightURL, true);
         xhr.send(null);
         xhr.onload = () => {
-            height = JSON.parse(xhr.responseText)["MostNewHeightData"];
+            height = JSON.parse(xhr.responseText);
+            height = height["MostNewHeightData"];
             start.bindPopup(`
             <h3 style="text-align:center">Raspberry pi 所在地</h3>
                 <p>目前偵測到淹水高度 = 
