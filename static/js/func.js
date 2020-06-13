@@ -29,7 +29,7 @@ xhr.onload = () => {
     coordinate = JSON.parse(xhr.responseText);
 
     // 繪製有地形圖資的範圍:
-    let rectangle = L.rectangle([coordinate["UpperLeft"], coordinate["LowwerRight"]], {
+    let rectangle = L.rectangle([coordinate.UpperLeft, coordinate.LowwerRight], {
         fill: false,
         color: "#333",
         dashArray: [0, 10, 30, 10]
@@ -44,7 +44,7 @@ xhr.onload = () => {
         popupAnchor: [0, -35]
     });
 
-    let start = L.marker(coordinate["Start"], {
+    let start = L.marker(coordinate.Start, {
         icon: icon
     }).addTo(map);
 
@@ -52,7 +52,7 @@ xhr.onload = () => {
     xhr.send(null);
     xhr.onload = () => {
         height = JSON.parse(xhr.responseText);
-        height = height["MostNewHeightData"];
+        height = height.MostNewHeightData;
         start.bindPopup(`
         <h3 style="text-align:center">Raspberry pi 所在地</h3>
             <p>目前偵測到淹水高度 = 
@@ -64,7 +64,7 @@ xhr.onload = () => {
 
 
     // 不斷更新資訊:
-    let flood = L.imageOverlay(imgURL, [coordinate["UpperLeft"], coordinate["LowwerRight"]]).addTo(map);
+    let flood = L.imageOverlay(imgURL, [coordinate.UpperLeft, coordinate.LowwerRight]).addTo(map);
     let intervalID = setInterval(() => {
 
         flood.remove();
@@ -75,7 +75,7 @@ xhr.onload = () => {
         let newHeightURL = `${heightJSON}?ver=${now.toString().split(" ").join("_")}`;
 
         // 繪製淹水範圍圖:
-        flood = L.imageOverlay(newCoordinateURL, [coordinate["UpperLeft"], coordinate["LowwerRight"]]).addTo(map);
+        flood = L.imageOverlay(newCoordinateURL, [coordinate.UpperLeft, coordinate.LowwerRight]).addTo(map);
 
         // 更改Popup內容:
 
@@ -83,7 +83,7 @@ xhr.onload = () => {
         xhr.send(null);
         xhr.onload = () => {
             height = JSON.parse(xhr.responseText);
-            height = height["MostNewHeightData"];
+            height = height.MostNewHeightData;
             start.bindPopup(`
             <h3 style="text-align:center">Raspberry pi 所在地</h3>
                 <p>目前偵測到淹水高度 = 
@@ -93,5 +93,5 @@ xhr.onload = () => {
 
         console.log(`Update flood range (${now.toString()}) !`);
 
-    }, coordinate["UpdateTime"] * 500);
+    }, coordinate.UpdateTime * 500);
 }
