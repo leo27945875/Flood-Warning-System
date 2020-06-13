@@ -24,6 +24,10 @@ class EmailSender(object):
 
         return "\n"+"-"*50+"\n"+f"{site}\n"+'-'*50+f"\n{message}"
 
+    def __del__(self):
+        self.server.quit()
+        print("Quited the G-mail server !")
+
     def SetEmailAddresses(self, addresses):
         with open(addresses, "r") as f:
             for line in f:
@@ -49,6 +53,5 @@ class EmailSender(object):
         try:
             self.server.send_message(self.msg)
             print(f"Successfully sent a e-mail ! ({content})")
-            # self.server.quit()
         except Exception as e:
             print(f"Can't send a e-mail! The error message is\n  '{e}'")
