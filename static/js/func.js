@@ -28,6 +28,14 @@ xhr.onload = () => {
 
     coordinate = JSON.parse(xhr.responseText);
 
+    // 繪製有地形圖資的範圍:
+    let rectangle = L.rectangle([coordinate["UpperLeft"], coordinate["LowwerRight"]], {
+        fill: false,
+        color: "#333",
+        dashArray: [0, 10, 30, 10]
+    }).addTo(map);
+
+
     // 標示Raspberry pi的位置:
     let icon = L.icon({
         iconUrl: "https://image.flaticon.com/icons/svg/1627/1627389.svg",
@@ -54,13 +62,6 @@ xhr.onload = () => {
         start.openPopup();
     };
 
-
-    // 繪製有地形圖資的範圍:
-    let rectangle = L.rectangle([coordinate["UpperLeft"], coordinate["LowwerRight"]], {
-        fill: false,
-        color: "#333",
-        dashArray: [0, 10, 30, 10]
-    }).addTo(map);
 
     // 不斷更新資訊:
     let flood = L.imageOverlay(imgURL, [coordinate["UpperLeft"], coordinate["LowwerRight"]]).addTo(map);
@@ -92,5 +93,5 @@ xhr.onload = () => {
 
         console.log(`Update flood range (${now.toString()}) !`);
 
-    }, coordinate["UpdateTime"] * 1000);
+    }, coordinate["UpdateTime"] * 500);
 }

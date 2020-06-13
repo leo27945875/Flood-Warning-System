@@ -11,7 +11,7 @@ def Init():
     # IoTtalk settings:
     serverURL = 'https://demo.iottalk.tw/'
     regAddr = '0511238'
-    updateTime = 600
+    updateTime = 5
     mode = "test"
 
     # File settings:
