@@ -6,12 +6,15 @@ let map = L.map('map', {
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
 // AJAX取得各式座標資訊:
+let imgJSON = location.protocol + "//" + location.host + "/static/img/coordinate.json";
+let imgURL = location.protocol + "//" + location.host + "/static/img/flood_range.png";
+let heightJSON = location.protocol + "//" + location.host + "/static/img/flood_new_height.json";
+
 let coordinate;
 let height;
-let imgURL = location.protocol + "//" + location.host + "/static/img/flood_range.png";
-let imgJSON = location.protocol + "//" + location.host + "/static/img/coordinate.json";
-let heightJSON = location.protocol + "//" + location.host + "/static/img/flood_new_height.json";
+
 let xhr = new XMLHttpRequest();
+let now = new Date();
 
 while (true) {
     try {
@@ -36,6 +39,11 @@ xhr.onload = () => {
     }).addTo(map);
 
 
+    // 繪製淹水範圍:
+    let newImgURL = `${imgURL}?ver=${now.toString().split(" ").join("_")}`;
+    let flood = L.imageOverlay(newImgURL, [coordinate.UpperLeft, coordinate.LowwerRight]).addTo(map);
+
+
     // 標示Raspberry pi的位置:
     let icon = L.icon({
         iconUrl: "https://image.flaticon.com/icons/svg/1627/1627389.svg",
@@ -48,7 +56,8 @@ xhr.onload = () => {
         icon: icon
     }).addTo(map);
 
-    xhr.open("GET", heightJSON, true);
+    let newHeightURL = `${heightJSON}?ver=${now.toString().split(" ").join("_")}`;
+    xhr.open("GET", newHeightURL, true);
     xhr.send(null);
     xhr.onload = () => {
         height = JSON.parse(xhr.responseText);
@@ -64,18 +73,17 @@ xhr.onload = () => {
 
 
     // 不斷更新資訊:
-    let flood = L.imageOverlay(imgURL, [coordinate.UpperLeft, coordinate.LowwerRight]).addTo(map);
     let intervalID = setInterval(() => {
 
         flood.remove();
 
         let now = new Date();
         let xhr = new XMLHttpRequest();
-        let newCoordinateURL = `${imgURL}?ver=${now.toString().split(" ").join("_")}`;
+        let newImgURL = `${imgURL}?ver=${now.toString().split(" ").join("_")}`;
         let newHeightURL = `${heightJSON}?ver=${now.toString().split(" ").join("_")}`;
 
         // 繪製淹水範圍圖:
-        flood = L.imageOverlay(newCoordinateURL, [coordinate.UpperLeft, coordinate.LowwerRight]).addTo(map);
+        flood = L.imageOverlay(newImgURL, [coordinate.UpperLeft, coordinate.LowwerRight]).addTo(map);
 
         // 更改Popup內容:
 
