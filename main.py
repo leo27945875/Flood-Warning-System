@@ -51,7 +51,7 @@ def SaveHeightDataToCSV(file, height):
     date = f"{now.year}/{now.month}/{now.day}"
     clock = f"{now.hour}:{now.minute}:{now.second}"
     data = f"{date}, {clock}, {height}"
-    print("[Main] "+"\n"+data+"(cm)")
+    print("\n"+"[Main] "+data+"(cm)")
     file.write(data+"\n")
     file.flush()
 
