@@ -57,7 +57,7 @@ class Model(object):
             self.skip = 6
         finally:
             self.graph = np.loadtxt(self.source, skiprows=self.skip)
-            print("Geometry image has been loaded !")
+            print("[FloodModel] Geometry image has been loaded !")
 
     def FindStart(self):
         if not self.startOnGrid:
@@ -71,7 +71,7 @@ class Model(object):
     def MaskImage(self):
         self.wet = np.where(self.graph < self.mask +
                             self.graph[self.start[1], self.start[0]], 1, 0)
-        print("Image masked.")
+        print("[FloodModel] Image masked.")
 
     def FloodFillAlgorithm(self):
         if self.startOnGrid:
@@ -86,7 +86,7 @@ class Model(object):
             height = wet.shape[0]-1
             flood = np.zeros_like(wet, dtype=np.int8)
 
-            print("Beginning flood fill algorithm.")
+            print("[FloodModel] Beginning flood fill algorithm.")
             while fill:
                 x, y = fill.pop()
 
@@ -117,16 +117,16 @@ class Model(object):
 
             self.flood = flood
             self.wet = None
-            print("Finished Flood fill.")
+            print("[FloodModel] Finished Flood fill.")
         else:
             raise Exception(
-                "Can't calculate the flood, because self.startOnGrid is False!")
+                "[FloodModel] Can't calculate the flood, because self.startOnGrid is False!")
 
     def Export(self):
         if self.export:
             fileExt = os.path.splitext(self.target)[-1]
             if fileExt == ".asc":
-                print("Saving image as .asc ...")
+                print("[FloodModel] Saving image as .asc ...")
                 header = ""
                 for i in range(self.skip):
                     header += self.hdr[i]
@@ -136,7 +136,7 @@ class Model(object):
                     np.savetxt(f, self.flood, fmt="%1i")
 
             elif fileExt == ".png":
-                print("Saving image as .png ...")
+                print("[FloodModel] Saving image as .png ...")
                 r = np.ones(
                     [self.params["nrows"], self.params["ncols"]])*0.047058823529411764
                 g = np.ones(
@@ -145,12 +145,12 @@ class Model(object):
                 a = self.flood*0.7
                 imsave(self.target, np.stack([r, g, b, a], axis=-1))
         else:
-            print("Didn't save any image !")
+            print("[FloodModel] Didn't save any image !")
 
-        print("Done!")
+        print("[FloodModel] Done!")
 
     def Tune(self, newMask, export=False):
-        print("Recompute the flood range ...")
+        print("[FloodModel] Recompute the flood range ...")
         self.mask = newMask
         self.export = export
         self.MaskImage()

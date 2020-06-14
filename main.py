@@ -21,7 +21,7 @@ def IoTInit():
 
     global receiver, model, emailSender, thingSpeakSender, timezone
 
-    print("Initializing the setting of IoT ...")
+    print("[Main] Initializing the setting of IoT ...")
     args.Init()
     args.receiver = Receiver(args.serverURL, args.regAddr, args.mode)
     args.model = Model(source=args.geometryImage,
@@ -38,7 +38,7 @@ def IoTInit():
     emailSender = args.emailSender
     thingSpeakSender = args.thingspeakSender
     timezone = pytz.timezone(args.timezone)
-    print("Finished initialization !")
+    print("[Main] Finished initialization !")
 
 
 def SaveHeightDataToCSV(file, height):
@@ -51,7 +51,7 @@ def SaveHeightDataToCSV(file, height):
     date = f"{now.year}/{now.month}/{now.day}"
     clock = f"{now.hour}:{now.minute}:{now.second}"
     data = f"{date}, {clock}, {height}"
-    print("\n"+data+"(cm)")
+    print("[Main] "+"\n"+data+"(cm)")
     file.write(data+"\n")
     file.flush()
 
@@ -75,7 +75,7 @@ def JudgeToSendEmail():
     """
 
     time.sleep(3)
-    print("Start judging whether send e-mail or not !")
+    print("[Main] Start judging whether send e-mail or not !")
     sendTime = -1e100
     while True:
         currTime = time.time()
@@ -109,7 +109,7 @@ def MakeFloodRangeImage():
     """
 
     time.sleep(4)
-    print("Start making flood range image !\n"+"="*50+"\n")
+    print("[Main] Start making flood range image !\n"+"="*50+"\n")
     with open(args.heightData, "a") as f:
         oldHeight = -1e100
         while True:
@@ -125,7 +125,7 @@ def MakeFloodRangeImage():
                     print("-"*50+'\n')
                     oldHeight = height
             else:
-                print("\nNo data received ...\n")
+                print("\n[Main] No data received ...\n")
 
             time.sleep(args.updateTime-0.08)
 
@@ -156,4 +156,4 @@ def Main():
     with open(args.coordinateData, "w") as f:
         json.dump(coordinate, f)
 
-    print("Got the coordinate of monited range !")
+    print("[Main] Got the coordinate of monited range !")

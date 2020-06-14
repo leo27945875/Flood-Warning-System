@@ -25,7 +25,7 @@ class Receiver(object):
         return "\n"+"-"*50+"\n"+f"{site}\n"+'-'*50+f"\n{self.profile}"
 
     def __del__(self):
-        print("Connection to IoTtalk closed !")
+        print("[IoTtalk] Connection to IoTtalk closed !")
 
     def ConnectToIoTtalk(self):
         DAN.profile['dm_name'] = 'FloodMoniter'
@@ -51,11 +51,12 @@ class Receiver(object):
                 except Exception as e:
                     print(e)
                     if str(e).find('mac_addr not found:') != -1:
-                        print('Reg_addr is not found. Try to re-register...')
+                        print(
+                            '[IoTtalk] Reg_addr is not found. Try to re-register...')
                         DAN.device_registration_with_retry(
                             self.serverURL, self.regAddr)
                     else:
-                        print('Connection failed due to unknow reasons.')
+                        print('[IoTtalk] Connection failed due to unknow reasons.')
                         time.sleep(1)
 
                 time.sleep(updateTime)
@@ -68,4 +69,4 @@ class Receiver(object):
 
         else:
             raise ValueError(
-                "Argument 'mode' must be one of 'real' and 'test' .")
+                "[IoTtalk] Argument 'mode' must be one of 'real' and 'test' .")

@@ -26,7 +26,7 @@ class EmailSender(object):
 
     def __del__(self):
         self.server.quit()
-        print("Connection to G-mail server closed !")
+        print("[EmailSender] Connection to G-mail server closed !")
 
     def SetEmailAddresses(self, addresses):
         with open(addresses, "r") as f:
@@ -40,7 +40,8 @@ class EmailSender(object):
             self.server.ehlo()
             self.server.login(user, password)
         except Exception as e:
-            print(f"Can't log in Gmail server! The error message is\n  '{e}'")
+            print(
+                f"[EmailSender] Can't log in Gmail server! The error message is\n  '{e}'")
 
     def SendFloodHeightMessages(self, content):
         self.msg = MIMEText(content)
@@ -48,10 +49,11 @@ class EmailSender(object):
         self.msg['From'] = self.gmail_user
         self.msg['To'] = self.clients
 
-        print("Sending a e-mail ...")
+        print("[EmailSender] Sending a e-mail ...")
 
         try:
             self.server.send_message(self.msg)
-            print(f"Successfully sent a e-mail ! ({content})")
+            print(f"[EmailSender] Successfully sent a e-mail ! ({content})")
         except Exception as e:
-            print(f"Can't send a e-mail! The error message is\n  '{e}'")
+            print(
+                f"[EmailSender] Can't send a e-mail ! The error message is\n  '{e}'")

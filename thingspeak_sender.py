@@ -29,7 +29,7 @@ class ThingSpeakSender(object):
 
     def __del__(self):
         self.conn.close()
-        print("Connection to Thinkspeak closed !")
+        print("[Thingspeak] Connection to Thinkspeak closed !")
 
     def ConnectToCloud(self):
         while (not self.isConnect):
@@ -37,8 +37,8 @@ class ThingSpeakSender(object):
                 self.conn = http.client.HTTPConnection("api.thingspeak.com:80")
                 self.conn.connect()
                 self.isConnect = True
-            except (http.client.HTTPException, socket.error) as ex:
-                print(f"Error! {ex}\n")
+            except (http.client.HTTPException, socket.error) as e:
+                print(f"Error! {e}\n")
                 self.isConnect = False
                 time.sleep(10)
 
@@ -46,5 +46,8 @@ class ThingSpeakSender(object):
         payload = urllib.parse.urlencode({'field1': height,
                                           'key': self.writeApiKey})
         self.conn.request("POST", "/update", payload, self.headers)
-        response = self.conn.getresponse()
-        self.response = response.read()
+        try:
+            response = self.conn.getresponse()
+            self.response = response.read()
+        except http.client.RemoteDisconnected:
+            print("[Thingspeak] Didn't get response.")
