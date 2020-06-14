@@ -124,6 +124,8 @@ def MakeFloodRangeImage():
                     model.Tune(height, export=True)
                     print("-"*50+'\n')
                     oldHeight = height
+                else:
+                    print("[Main] Needn't make a flood range image.")
             else:
                 print("\n[Main] No data received ...\n")
 
