@@ -8,26 +8,35 @@ class Receiver(object):
     A class which can pull the data on IoTtalk after being instantiated:
     """
 
-    def __init__(self, serverURL, regAddr):
+    def __init__(self, serverURL, regAddr, mode):
         self.serverURL = serverURL
         self.regAddr = regAddr
-
+        self.mode = mode
         self.height = None
         self.stop = None
         self.profile = None
+
+        if mode == 'real':
+            self.ConnectToIoTtalk()
 
     def __repr__(self):
         site = super(Receiver, self).__repr__()
 
         return "\n"+"-"*50+"\n"+f"{site}\n"+'-'*50+f"\n{self.profile}"
 
-    def ReceiveData(self, updateTime, mode):
-        if mode == "real":
-            DAN.profile['dm_name'] = 'FloodMoniter'
-            DAN.profile['df_list'] = ['FloodHeightIn', 'FloodHeightOut']
-            DAN.profile['d_name'] = 'FloodOutput'
-            DAN.device_registration_with_retry(self.serverURL, self.regAddr)
-            self.profile = DAN.profile
+    def __del__(self):
+        print("Connection to IoTtalk closed !")
+
+    def ConnectToIoTtalk(self):
+        DAN.profile['dm_name'] = 'FloodMoniter'
+        DAN.profile['df_list'] = ['FloodHeightIn', 'FloodHeightOut']
+        DAN.profile['d_name'] = 'FloodOutput'
+        DAN.device_registration_with_retry(self.serverURL, self.regAddr)
+        self.profile = DAN.profile
+        self.mode = 'real'
+
+    def ReceiveData(self, updateTime):
+        if self.mode == "real":
             self.stop = True
             while True:
                 try:
@@ -51,7 +60,7 @@ class Receiver(object):
 
                 time.sleep(updateTime)
 
-        elif mode == "test":
+        elif self.mode == "test":
             self.stop = False
             while True:
                 self.height = random.randint(0, 5)

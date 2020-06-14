@@ -1,6 +1,7 @@
 from receiver import Receiver
 from flood_model import Model
 from auto_email_sender import EmailSender
+from thingspeak_sender import ThingSpeakSender
 import twd97_to_wgs84
 import args
 import time
@@ -18,31 +19,34 @@ def IoTInit():
     Initialize the environment of this IoT project setting:
     """
 
-    global receiver, model, sender, timezone
+    global receiver, model, emailSender, thingSpeakSender, timezone
 
     print("Initializing the setting of IoT ...")
     args.Init()
-    args.receiver = Receiver(args.serverURL, args.regAddr)
+    args.receiver = Receiver(args.serverURL, args.regAddr, args.mode)
     args.model = Model(source=args.geometryImage,
                        target=args.floodRange,
                        mask=0.,
                        start=args.start,
                        startOnGrid=args.startOnGrid,
                        export=True)()
-    args.sender = EmailSender(args.myGmail, args.myPW, args.addresses)
+    args.emailSender = EmailSender(args.myGmail, args.myPW, args.addresses)
+    args.thingspeakSender = ThingSpeakSender(args.writeApiKey, args.headers)
 
     receiver = args.receiver
     model = args.model
-    sender = args.sender
+    emailSender = args.emailSender
+    thingSpeakSender = args.thingspeakSender
     timezone = pytz.timezone(args.timezone)
     print("Finished initialization !")
 
 
-def SaveHeightData(file, height):
+def SaveHeightDataToCSV(file, height):
     """
-    Save the flood height data received from the IoT device to a CSV file:
+    Save the flood height data received from the IoT device to a CSV file and Thinkspeak cloud:
     """
 
+    # Save height data to a CSV file:
     now = datetime.datetime.now(timezone)
     date = f"{now.year}/{now.month}/{now.day}"
     clock = f"{now.hour}:{now.minute}:{now.second}"
@@ -51,10 +55,17 @@ def SaveHeightData(file, height):
     file.write(data+"\n")
     file.flush()
 
+    # Save height data to Thinkspeak cloud:
+    thingSpeakSender.PostToThingspeak(height)
 
-def SaveMostNewHeightData(fileName, height):
-    with open(fileName, "w") as f:
-        json.dump({"MostNewHeightData": height}, f)
+
+def SaveMostNewNonNegativeHeightData(height):
+    """
+    Save most new non-negative flood height data to a JSON file:
+    """
+
+    with open(args.heightDataNew, "w") as f:
+        json.dump({"MostNewHeightData": round(height, 3)}, f)
         f.flush()
 
 
@@ -71,13 +82,13 @@ def JudgeToSendEmail():
         if currTime - sendTime >= args.nextTimeInterval:
             height = receiver.height
             if height and height >= args.thresholds[0]:
-                sender.SendFloodHeightMessages(f"絕望! 淹水已超過{height}公分!!")
+                emailSender.SendFloodHeightMessages(f"絕望! 淹水已超過{height}公分!!")
                 sendTime = currTime
             elif height and height >= args.thresholds[1]:
-                sender.SendFloodHeightMessages(f"震驚! 淹水已超過{height}公分!!")
+                emailSender.SendFloodHeightMessages(f"震驚! 淹水已超過{height}公分!!")
                 sendTime = currTime
             elif height and height >= args.thresholds[2]:
-                sender.SendFloodHeightMessages(f"注意! 淹水已超過{height}公分!!")
+                emailSender.SendFloodHeightMessages(f"注意! 淹水已超過{height}公分!!")
                 sendTime = currTime
 
         time.sleep(10)
@@ -89,7 +100,7 @@ def ReceiveFloodHeight():
     """
 
     print("Start receiving height data !")
-    receiver.ReceiveData(updateTime=args.updateTime, mode=args.mode)
+    receiver.ReceiveData(updateTime=args.updateTime)
 
 
 def MakeFloodRangeImage():
@@ -104,12 +115,11 @@ def MakeFloodRangeImage():
         while True:
             height = receiver.height
             if height is not None:
-                SaveHeightData(file=f,
-                               height=height)
+                SaveHeightDataToCSV(file=f,
+                                    height=height)
                 height = 0. if height <= 0. else height
-                SaveMostNewHeightData(fileName=args.heightDataNew,
-                                      height=height)
-                if abs(height-oldHeight) >= 0.3:
+                SaveMostNewNonNegativeHeightData(height)
+                if abs(height-oldHeight) >= 0.01:
                     print("-------------Making Flood Range Image-------------")
                     model.Tune(height, export=True)
                     print("-"*50+'\n')
@@ -117,7 +127,7 @@ def MakeFloodRangeImage():
             else:
                 print("\nNo data received ...\n")
 
-            time.sleep(args.updateTime-0.07)
+            time.sleep(args.updateTime-0.08)
 
 
 def Main():

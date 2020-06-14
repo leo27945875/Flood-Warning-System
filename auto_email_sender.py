@@ -26,7 +26,7 @@ class EmailSender(object):
 
     def __del__(self):
         self.server.quit()
-        print("Quited the G-mail server !")
+        print("Connection to G-mail server closed !")
 
     def SetEmailAddresses(self, addresses):
         with open(addresses, "r") as f:

@@ -8,18 +8,27 @@ class Receiver(object):
     A class which can pull the data on IoTtalk after being instantiated:
     """
 
-    def __init__(self):
+    def __init__(self, mode='real'):
         self.serverURL = 'https://demo.iottalk.tw/'
-        self.regAddr = 'djfirydkfjf'
+        self.regAddr = '0522238'
+        self.mode = mode
         self.height = None
 
-    def ReceiveData(self, mode):
-        if mode == "real":
-            DAN.profile['dm_name'] = 'FloodMoniter'
-            DAN.profile['df_list'] = ['FloodHeightIn', 'FloodHeightOut']
-            DAN.profile['d_name'] = 'FloodOutput'
-            DAN.device_registration_with_retry(self.serverURL, self.regAddr)
-            self.profile = DAN.profile
+        if self.mode == 'real':
+            self.ConnectToIoTtalk()
+
+    def __del__(self):
+        print("Connection to IoTtalk closed !")
+
+    def ConnectToIoTtalk(self):
+        DAN.profile['dm_name'] = 'FloodMoniter'
+        DAN.profile['df_list'] = ['FloodHeightIn', 'FloodHeightOut']
+        DAN.profile['d_name'] = 'FloodOutput_Linebot'
+        DAN.device_registration_with_retry(self.serverURL, self.regAddr)
+        self.profile = DAN.profile
+
+    def ReceiveData(self):
+        if self.mode == "real":
             try:
                 ODF_data = DAN.pull('FloodHeightOut')
                 if ODF_data != None:
@@ -39,7 +48,7 @@ class Receiver(object):
                     print('Connection failed due to unknow reasons.')
                     time.sleep(1)
 
-        elif mode == "test":
+        elif self.mode == "test":
             self.height = random.randint(0, 5)
             print('-'*50+'\n'+f"height = {self.height}(cm)\n"+'-'*50)
 

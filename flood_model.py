@@ -17,7 +17,6 @@ class Model(object):
         self.start = start
         self.startOnGrid = startOnGrid
         self.export = export
-
         self.graph = None
         self.hdr = None
         self.wet = None
