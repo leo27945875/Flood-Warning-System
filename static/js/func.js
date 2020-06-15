@@ -37,6 +37,7 @@ xhr.send(null);
 xhr.onload = () => {
 
     coordinate = JSON.parse(xhr.responseText);
+    coordinate.Start = [roundX(coordinate.Start[0], 3), roundX(coordinate.Start[1], 3)];
 
     // 繪製有地形圖資的範圍:
     let rectangle = L.rectangle([coordinate.UpperLeft, coordinate.LowwerRight], {
@@ -74,8 +75,8 @@ xhr.onload = () => {
             <p>目前偵測到淹水高度 = 
                 <span style="color:red">${height}</span> (cm)
             </p>
-            <p>經度: ${roundX(coordinate.Start[1], 3)}</p>
-            <p>緯度: ${roundX(coordinate.Start[0], 3)}</p>
+            <p>經度: ${coordinate.Start[1]}</p>
+            <p>緯度: ${coordinate.Start[0]}</p>
         `);
 
         start.openPopup();
@@ -107,8 +108,8 @@ xhr.onload = () => {
                 <p>目前偵測到淹水高度 = 
                     <span style="color:red">${height}</span> (cm)
                 </p>
-                <p>經度: ${roundX(coordinate.Start[1], 3)}</p>
-                <p>緯度: ${roundX(coordinate.Start[0], 3)}</p>
+                <p>經度: ${coordinate.Start[1]}</p>
+                <p>緯度: ${coordinate.Start[0]}</p>
             `);
         }
 
