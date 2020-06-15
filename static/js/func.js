@@ -87,10 +87,10 @@ xhr.onload = () => {
 
         flood.remove();
 
-        let now = new Date();
-        let xhr = new XMLHttpRequest();
-        let newImgURL = `${imgURL}?ver=${now.toString().split(" ").join("_")}`;
-        let newHeightURL = `${heightJSON}?ver=${now.toString().split(" ").join("_")}`;
+        now = new Date();
+        xhr = new XMLHttpRequest();
+        newImgURL = `${imgURL}?ver=${now.toString().split(" ").join("_")}`;
+        newHeightURL = `${heightJSON}?ver=${now.toString().split(" ").join("_")}`;
 
         // 繪製淹水範圍圖:
         flood = L.imageOverlay(newImgURL, [coordinate.UpperLeft, coordinate.LowwerRight]).addTo(map);
