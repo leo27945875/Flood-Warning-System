@@ -129,7 +129,7 @@ def MakeFloodRangeImage():
             else:
                 print("\n[Main] No data received ...\n")
 
-            time.sleep(args.updateTime-0.08)
+            time.sleep(args.updateTime-0.205)
 
 
 def Main():
