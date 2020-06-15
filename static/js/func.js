@@ -5,6 +5,13 @@ let map = L.map('map', {
 });
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
+function roundX(value, precision) {
+    let multiply = Math.pow(10, precision);
+    let result = Math.round(value * multiply) / multiply;
+
+    return result;
+}
+
 // AJAX取得各式座標資訊:
 let imgJSON = location.protocol + "//" + location.host + "/static/img/coordinate.json";
 let imgURL = location.protocol + "//" + location.host + "/static/img/flood_range.png";
@@ -67,8 +74,8 @@ xhr.onload = () => {
             <p>目前偵測到淹水高度 = 
                 <span style="color:red">${height}</span> (cm)
             </p>
-            <p>經度: ${coordinate.Start[1]}</p>
-            <p>緯度: ${coordinate.Start[0]}</p>
+            <p>經度: ${roundX(coordinate.Start[1], 3)}</p>
+            <p>緯度: ${roundX(coordinate.Start[0], 3)}</p>
         `);
 
         start.openPopup();
@@ -100,8 +107,8 @@ xhr.onload = () => {
                 <p>目前偵測到淹水高度 = 
                     <span style="color:red">${height}</span> (cm)
                 </p>
-                <p>經度: ${coordinate.Start[1]}</p>
-                <p>緯度: ${coordinate.Start[0]}</p>
+                <p>經度: ${roundX(coordinate.Start[1], 3)}</p>
+                <p>緯度: ${roundX(coordinate.Start[0], 3)}</p>
             `);
         }
 
