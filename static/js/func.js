@@ -66,7 +66,10 @@ xhr.onload = () => {
         <h3 style="text-align:center">Raspberry pi 所在地</h3>
             <p>目前偵測到淹水高度 = 
                 <span style="color:red">${height}</span> (cm)
-            </p>`);
+            </p>
+            <p>經度: ${coordinate.Start[1]}</p>
+            <p>緯度: ${coordinate.Start[0]}</p>
+        `);
 
         start.openPopup();
     };
@@ -96,7 +99,10 @@ xhr.onload = () => {
             <h3 style="text-align:center">Raspberry pi 所在地</h3>
                 <p>目前偵測到淹水高度 = 
                     <span style="color:red">${height}</span> (cm)
-                </p>`);
+                </p>
+                <p>經度: ${coordinate.Start[1]}</p>
+                <p>緯度: ${coordinate.Start[0]}</p>
+            `);
         }
 
         console.log(`Update flood range (${now.toString()}) !`);

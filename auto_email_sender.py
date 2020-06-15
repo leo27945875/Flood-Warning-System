@@ -12,6 +12,7 @@ class EmailSender(object):
         self.gmail_user = user
         self.clients = ""
         self.server = None
+        self.isConnect = None
 
         self.SetEmailAddresses(addresses)
         self.LogInGmailServer(user, password)
@@ -26,7 +27,8 @@ class EmailSender(object):
 
     def __del__(self):
         self.server.quit()
-        print("[EmailSender] Connection to G-mail server closed !")
+        if self.isConnect:
+            print("[EmailSender] Connection to G-mail server closed !")
 
     def SetEmailAddresses(self, addresses):
         with open(addresses, "r") as f:
@@ -39,21 +41,27 @@ class EmailSender(object):
             self.server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
             self.server.ehlo()
             self.server.login(user, password)
+            self.isConnect = True
         except Exception as e:
             print(
                 f"[EmailSender] Can't log in Gmail server! The error message is\n  '{e}'")
+            self.isConnect = False
 
     def SendFloodHeightMessages(self, content):
-        self.msg = MIMEText(content)
-        self.msg['Subject'] = '交大淹水警報!!'
-        self.msg['From'] = self.gmail_user
-        self.msg['To'] = self.clients
+        if self.isConnect:
+            self.msg = MIMEText(content)
+            self.msg['Subject'] = '交大淹水警報!!'
+            self.msg['From'] = self.gmail_user
+            self.msg['To'] = self.clients
 
-        print("[EmailSender] Sending a e-mail ...")
-
-        try:
-            self.server.send_message(self.msg)
-            print(f"[EmailSender] Successfully sent a e-mail ! ({content})")
-        except Exception as e:
+            print("[EmailSender] Sending a e-mail ...")
+            try:
+                self.server.send_message(self.msg)
+                print(
+                    f"[EmailSender] Successfully sent a e-mail ! ({content})")
+            except Exception as e:
+                print(
+                    f"[EmailSender] Can't send a e-mail ! The error message is\n  '{e}'")
+        else:
             print(
-                f"[EmailSender] Can't send a e-mail ! The error message is\n  '{e}'")
+                "[EmailSender] Didn't connect to G-mail server, can't send any e-mail ...")

@@ -49,7 +49,7 @@ class Receiver(object):
                         self.stop = True
 
                 except Exception as e:
-                    print(e)
+                    print(f"[IoTtalk] {e}")
                     if str(e).find('mac_addr not found:') != -1:
                         print(
                             '[IoTtalk] Reg_addr is not found. Try to re-register...')
@@ -57,7 +57,9 @@ class Receiver(object):
                             self.serverURL, self.regAddr)
                     else:
                         print('[IoTtalk] Connection failed due to unknow reasons.')
-                        time.sleep(1)
+
+                    time.sleep(5)
+                    continue
 
                 time.sleep(updateTime)
 
