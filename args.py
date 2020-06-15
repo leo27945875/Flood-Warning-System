@@ -11,8 +11,8 @@ def Init():
     # IoTtalk settings:
     serverURL = 'https://demo.iottalk.tw/'
     regAddr = '0511238'
-    updateTime = 600
-    mode = "test"
+    updateTime = 5
+    mode = "real"
 
     # File settings:
     root = "./static/img/"
@@ -30,7 +30,7 @@ def Init():
     timezone = "Asia/Taipei"
 
     # E-mail address setting:
-    sendEmail = False
+    sendEmail = True
     myGmail = "ezioatiar@gmail.com"
     myPW = "a8077606"
     addresses = "my.txt"
