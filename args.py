@@ -11,8 +11,8 @@ def Init():
     # IoTtalk settings:
     serverURL = 'https://demo.iottalk.tw/'
     regAddr = '0511238'
-    updateTime = 10
-    mode = "real"
+    updateTime = 5
+    mode = "test"
 
     # File settings:
     root = "./static/img/"
