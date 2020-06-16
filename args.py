@@ -23,7 +23,7 @@ def Init():
     coordinateData = root+"coordinate.json"
 
     # Flood model setting:
-    start = (249761.6, 2742381.8)
+    start = (249760.8, 2742380.8)
     startOnGrid = False
 
     # Time zone:
