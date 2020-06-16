@@ -39,7 +39,7 @@ class EmailSender(object):
         self.gmail_user = user
         try:
             self.server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-            self.server.ehlo()
+            self.server.starttls()
             self.server.login(user, password)
             self.isConnect = True
         except Exception as e:

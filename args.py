@@ -32,7 +32,7 @@ def Init():
     # E-mail address setting:
     sendEmail = True
     myGmail = "ezioatiar@gmail.com"
-    myPW = "a8077606"
+    myPW = "scocuwtmjmybksvl"
     addresses = "my.txt"
     thresholds = [5, 2, 0]
     nextTimeInterval = updateTime*6
