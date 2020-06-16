@@ -30,7 +30,7 @@ def Init():
     timezone = "Asia/Taipei"
 
     # E-mail address setting:
-    sendEmail = True
+    sendEmail = False
     myGmail = "ezioatiar@gmail.com"
     myPW = "scocuwtmjmybksvl"
     addresses = "my.txt"
