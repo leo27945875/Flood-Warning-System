@@ -1,11 +1,12 @@
 import args
-from pyreproj import Reprojector
+import pyproj
 
 
 # Coordinate system: WGS84 => 4326, TWD97_Zone121 => 3826 .
-rp = Reprojector()
-Func = rp.get_transformation_function(3826, 4326)
-IFunc = rp.get_transformation_function(4326, 3826)
+
+global proj
+
+proj = pyproj.Transformer.from_crs(3826, 4326)
 
 
 def Transform(tx, ty):
@@ -13,19 +14,9 @@ def Transform(tx, ty):
     For TDW97_Zone121(x, y) => WGS84(lat, lng):
     """
 
-    latLng = list(Func(tx, ty))
+    latLng = proj.transform(tx, ty)
 
     return latLng
-
-
-def InverseTransform(lat, lng):
-    """
-    For WGS84(lat, lng) => TWD97_Zone121(x, y):
-    """
-
-    txy = list(IFunc(lat, lng))
-
-    return txy
 
 
 def GetLatLng():

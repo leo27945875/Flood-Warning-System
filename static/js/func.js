@@ -37,7 +37,6 @@ xhr.send(null);
 xhr.onload = () => {
 
     coordinate = JSON.parse(xhr.responseText);
-    coordinate.Start = [roundX(coordinate.Start[0], 3), roundX(coordinate.Start[1], 3)];
 
     // 繪製有地形圖資的範圍:
     let rectangle = L.rectangle([coordinate.UpperLeft, coordinate.LowwerRight], {
@@ -65,6 +64,7 @@ xhr.onload = () => {
     }).addTo(map);
 
     let newHeightURL = `${heightJSON}?ver=${now.toString().split(" ").join("_")}`;
+    coordinate.Start = [roundX(coordinate.Start[0], 3), roundX(coordinate.Start[1], 3)];
     xhr.open("GET", newHeightURL, true);
     xhr.send(null);
     xhr.onload = () => {
