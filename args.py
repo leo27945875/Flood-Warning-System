@@ -34,7 +34,7 @@ def Init():
     myGmail = "ezioatiar@gmail.com"
     myPW = "scocuwtmjmybksvl"
     addresses = "my.txt"
-    thresholds = [5, 2, 0]
+    thresholds = [45, 7, 1]
     nextTimeInterval = updateTime*6
 
     # Thingspeak setting:

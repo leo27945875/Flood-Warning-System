@@ -66,7 +66,7 @@ class Receiver(object):
         elif self.mode == "test":
             self.stop = False
             while True:
-                self.height = random.randint(0, 5)
+                self.height = random.uniform(0, 60)
                 time.sleep(updateTime)
 
         else:
