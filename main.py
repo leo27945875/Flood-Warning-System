@@ -99,7 +99,7 @@ def ReceiveFloodHeight():
     Receive the flood height data detected by the IoT device:
     """
 
-    print("Start receiving height data !")
+    print("[Main] Start receiving height data !")
     receiver.ReceiveData(updateTime=args.updateTime)
 
 
