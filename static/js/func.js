@@ -3,7 +3,10 @@ let map = L.map('map', {
     center: [24.7868518, 120.9972911],
     zoom: 15.5
 });
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
 
 function roundX(value, precision) {
     let multiply = Math.pow(10, precision);
