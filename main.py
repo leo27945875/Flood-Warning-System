@@ -23,15 +23,20 @@ def IoTInit():
 
     print("[Main] Initializing the setting of IoT ...")
     args.Init()
-    args.receiver = Receiver(args.serverURL, args.regAddr, args.mode)
+    args.receiver = Receiver(args.serverURL,
+                             args.regAddr,
+                             args.mode)
     args.model = Model(source=args.geometryImage,
                        target=args.floodRange,
                        mask=0.,
                        start=args.start,
                        startOnGrid=args.startOnGrid,
                        export=True)()
-    args.emailSender = EmailSender(args.myGmail, args.myPW, args.addresses)
-    args.thingspeakSender = ThingSpeakSender(args.writeApiKey, args.headers)
+    args.emailSender = EmailSender(args.myGmail,
+                                   args.myPW,
+                                   args.addresses)
+    args.thingspeakSender = ThingSpeakSender(args.writeApiKey,
+                                             args.headers)
 
     receiver = args.receiver
     model = args.model

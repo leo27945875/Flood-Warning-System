@@ -2,7 +2,7 @@ import args
 import pyproj
 
 
-# Coordinate system: WGS84 => 4326, TWD97_Zone121 => 3826 .
+# Coordinate system: WGS84 is epsg:4326, TWD97_Zone121 is epsg:3826 .
 
 global proj
 
