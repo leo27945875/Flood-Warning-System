@@ -6,7 +6,7 @@ def Init():
 
     global serverURL, regAddr, updateTime, root, geometryImage, floodRange, heightData, heightDataNew, \
         coordinateData, start, startOnGrid, mode, timezone, receiver, model, emailSender, thingspeakSender, \
-        sendEmail, myGmail, myPW, addresses, thresholds, nextTimeInterval, writeApiKey, headers
+        sendEmail, myGmail, myPW, addresses, thresholds, placeName, nextTimeInterval, writeApiKey, headers
 
     # IoTtalk settings:
     serverURL = 'https://demo.iottalk.tw/'
@@ -30,11 +30,12 @@ def Init():
     timezone = "Asia/Taipei"
 
     # E-mail address setting:
-    sendEmail = False
+    sendEmail = True
     myGmail = "ezioatiar@gmail.com"
     myPW = "scocuwtmjmybksvl"
     addresses = "my.txt"
     thresholds = [45, 7, 1]
+    placeName = "工程二館"
     nextTimeInterval = updateTime*6
 
     # Thingspeak setting:

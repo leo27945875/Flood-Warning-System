@@ -87,13 +87,16 @@ def JudgeToSendEmail():
         if currTime - sendTime >= args.nextTimeInterval:
             height = receiver.height
             if height and height >= args.thresholds[0]:
-                emailSender.SendFloodHeightMessages(f"絕望! 淹水已超過{height}公分!!")
+                emailSender.SendFloodHeightMessages(
+                    f"注意! {args.placeName}淹水已超過{round(height, 3)}公分!!\n<淹水範圍地圖>: https://floodmoniter-nctu-cv-2020.herokuapp.com/")
                 sendTime = currTime
             elif height and height >= args.thresholds[1]:
-                emailSender.SendFloodHeightMessages(f"震驚! 淹水已超過{height}公分!!")
+                emailSender.SendFloodHeightMessages(
+                    f"注意! {args.placeName}淹水已超過{round(height, 3)}公分!!\n<淹水範圍地圖>: https://floodmoniter-nctu-cv-2020.herokuapp.com/")
                 sendTime = currTime
             elif height and height >= args.thresholds[2]:
-                emailSender.SendFloodHeightMessages(f"注意! 淹水已超過{height}公分!!")
+                emailSender.SendFloodHeightMessages(
+                    f"注意! {args.placeName}淹水已超過{round(height, 3)}公分!!\n<淹水範圍地圖>: https://floodmoniter-nctu-cv-2020.herokuapp.com/")
                 sendTime = currTime
 
         time.sleep(10)
