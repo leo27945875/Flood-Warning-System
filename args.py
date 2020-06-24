@@ -12,7 +12,7 @@ def Init():
     serverURL = 'https://demo.iottalk.tw/'
     regAddr = '0511238'
     updateTime = 5
-    mode = "real"
+    mode = "test"
 
     # File settings:
     root = "./static/img/"
