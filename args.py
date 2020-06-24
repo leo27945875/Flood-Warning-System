@@ -16,7 +16,7 @@ def Init():
 
     # File settings:
     root = "./static/img/"
-    geometryImage = root+"nctu_6m_TWD97.asc"
+    geometryImage = root+"nctu_TWD97.asc"
     floodRange = root+"flood_range.png"
     heightData = root+"flood_height.csv"
     heightDataNew = root+"flood_new_height.json"
