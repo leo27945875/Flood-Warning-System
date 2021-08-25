@@ -4,12 +4,6 @@ NCTU Civil Capstone2020 Team5
 國立交通大學 土木工程學系 108學年度第2學期Capstone課程`第五組`作品
 
 ## 有關URL(皆已過期):
-* IoTtalk:
-    http://demo.iottalk.tw:7788/connection#
-
-* Heroku:
-    https://dashboard.heroku.com/apps/floodmoniter-nctu-cv-2020
-
 * 最終網站:
     https://floodmoniter-nctu-cv-2020.herokuapp.com/
 
