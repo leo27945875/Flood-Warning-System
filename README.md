@@ -1,8 +1,7 @@
 # FloodMoniter
 NCTU Civil Capstone2020 Team5
 
-國立交通大學 土木工程學系 108學年度第2學期Capstone課程`第五組`作品~~ <br>
-ヽ(∀ﾟ )人(ﾟ∀ﾟ)人( ﾟ∀)人(∀ﾟ )人(ﾟ∀ﾟ)人( ﾟ∀)ﾉ
+國立交通大學 土木工程學系 108學年度第2學期Capstone課程`第五組`作品
 
 ## 有關URL:
 * IoTtalk:
