@@ -20,4 +20,4 @@ NCTU Civil Capstone2020 Team5
     https://floodmoniter-nctu-cv-2020.herokuapp.com/height
     
 ## 介紹
-![](./土木實作專題期末成果海報.pdf)
+
